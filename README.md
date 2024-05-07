@@ -1,5 +1,7 @@
 # Taskpro-Backend
 
+testare Postman
+
 POST http://localhost:8080/api/users/register
 
 body:
@@ -36,5 +38,22 @@ PATCH http://localhost:3000/api/users/theme
 
 body
 {"theme": "violet"}
+Authorizathion: bearer token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2EzZGEwNDQ5YmQ5N2VjNWY5YmY1NyIsImlhdCI6MTcxNTA5ODA1OSwiZXhwIjoxNzE1MDk4NjU5fQ.OjZWHT8iObHyjKRTMDs5uxSYBR8VVi9xcqBO4vO_RXo
+(accessToken din login)
+
+PUT http://localhost:3000/api/users/profile
+Authorizathion: bearer token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2EzZGEwNDQ5YmQ5N2VjNWY5YmY1NyIsImlhdCI6MTcxNTA5ODA1OSwiZXhwIjoxNzE1MDk4NjU5fQ.OjZWHT8iObHyjKRTMDs5uxSYBR8VVi9xcqBO4vO_RXo
+(accessToken din login)
+
+body:
+{"name": "Ionel Doe",
+"email": "johndoe1@example1.com",
+"password":"1234A12"
+}
+POST http://localhost:3000/api/users/help
+body:
+{"email":"janedoe1@example.com",
+"comment":"Please consider this request"}
+
 Authorizathion: bearer token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2EzZGEwNDQ5YmQ5N2VjNWY5YmY1NyIsImlhdCI6MTcxNTA5ODA1OSwiZXhwIjoxNzE1MDk4NjU5fQ.OjZWHT8iObHyjKRTMDs5uxSYBR8VVi9xcqBO4vO_RXo
 (accessToken din login)

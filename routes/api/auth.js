@@ -7,13 +7,13 @@ const {
   logout,
   updateTheme,
   updateProfile,
-  getHelpEmail,
+  sendHelpRequest,
 } = require("../../controllers/auth");
 
 const validateBody = require("../../middlewares/validateBody");
 const authenticate = require("../../middlewares/authenticate");
 const schemas = require("../../models/validation-schemas/user-validation");
-const uploadCloud = require("../../middlewares/uploadMiddlewares");
+const imageUpload = require("../../middlewares/uploadMiddleware");
 
 const router = express.Router();
 
@@ -31,15 +31,16 @@ router.patch(
 router.put(
   "/profile",
   authenticate,
-  uploadCloud.single("avatarURL"),
+  imageUpload.single("avatarURL"),
   validateBody(schemas.registerSchema),
   updateProfile
 );
+
 router.post(
   "/help",
   authenticate,
   validateBody(schemas.helpSchema),
-  getHelpEmail
+  sendHelpRequest
 );
 
 module.exports = router;

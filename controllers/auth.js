@@ -7,6 +7,7 @@ const wrapControllerFunction = require("../helpers/decorators");
 const crypto = require("crypto");
 const fs = require("fs");
 const jimp = require("jimp");
+const gravatar = require("gravatar");
 
 const { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } = process.env;
 
@@ -166,91 +167,97 @@ async function updateTheme(req, res) {
 
 async function updateProfile(req, res) {
   const { _id } = req.user;
+  const { name, email, password } = req.body;
+  const avatarImage = req.file;
 
-  //   if (!req.file && !req.body.name && !req.body.email && !req.body.password) {
-  //     throw HttpError(400, "Enter the data for changes");
-  //   }
+  try {
+    let updates = {};
+    if (name) {
+      updates.name = name;
+    }
+    if (email) {
+      if (!validateEmail(email)) {
+        return res.status(400).json({ message: "Invalid email address" });
+      }
+      updates.email = email;
+    }
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updates.password = hashedPassword;
+    }
+    if (avatarImage) {
+      const avatarImageName = `${_id}-${avatarImage.originalname}`;
+      const avatarPath = path.join(
+        __dirname,
+        "..",
+        "public",
+        "avatars",
+        avatarImageName
+      );
+      await resizeAndMoveImage(avatarImage.path, avatarPath);
+      updates.avatarURL = `/avatars/${avatarImageName}`;
+    } else {
+      const user = await User.findById(_id);
+      if (!user.avatarURL && email) {
+        const avatarURL = gravatar.url(email, {
+          s: "200",
+          r: "pg",
+          d: "identicon",
+        });
+        updates.avatarURL = avatarURL;
+      }
+    }
+    const updatedUser = await User.findByIdAndUpdate(_id, updates, {
+      new: true,
+      select: "-password -createdAt -updatedAt",
+    });
 
-  //   if (!req.file && !req.body.password) {
-  //     const result = await User.findByIdAndUpdate(_id, req.body, {
-  //       new: true,
-  //       select: "-password -createdAt -updatedAt",
-  //     });
-  //     res.json(result);
-  //     return;
-  //   }
-
-  //   if (!req.body.password) {
-  //     const upload = req.file.path;
-  //     const result = await User.findByIdAndUpdate(
-  //       _id,
-  //       {
-  //         ...req.body,
-  //         avatarURL: upload,
-  //       },
-  //       { new: true, select: "-password -createdAt -updatedAt" }
-  //     );
-  //     res.json(result);
-  //     return;
-  //   }
-
-  if (!req.file) {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const result = await User.findByIdAndUpdate(
-      _id,
-      {
-        ...req.body,
-        password: hashedPassword,
-      },
-      { new: true, select: "-password -createdAt -updatedAt" }
-    );
-    res.json(result);
-    return;
+    res.json(updatedUser);
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Error updating profile" });
   }
-
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const upload = req.file.path;
-
-  const result = await User.findByIdAndUpdate(
-    _id,
-    {
-      ...req.body,
-      password: hashedPassword,
-      avatarURL: upload,
-    },
-    { new: true, select: "-password -createdAt -updatedAt" }
-  );
-  res.json(result);
 }
 
-async function getHelpEmail(req, res) {
-  const { email, comment } = req.body;
+async function resizeAndMoveImage(inputPath, outputPath) {
+  const image = await jimp.read(inputPath);
+  await image.resize(250, 250).write(outputPath);
 
-  const helpReq = {
-    to: "taskpro.project@gmail.com",
-    subject: "User need help",
-    html: `<p> Email: ${email}, Comment: ${comment}</p>`,
-  };
-  await sendEmail(helpReq);
-  const helpRes = {
-    to: email,
-    subject: "Support",
-    html: `<p>Thank you for you request! We will consider your comment ${comment}</p>`,
-  };
-  await sendEmail(helpRes);
+  fs.renameSync(inputPath, outputPath);
+}
 
-  res.json({
-    message: "Reply email sent",
-  });
+async function sendHelpRequest(req, res) {
+  try {
+    const { email, comment } = req.body;
+
+    const supportEmail = {
+      to: "taskpro.project@gmail.com",
+      subject: "User needs support",
+      html: `<p>Email: ${email}<br>Comment: ${comment}</p>`,
+    };
+    await sendEmail(supportEmail);
+    const confirmationEmail = {
+      to: email,
+      subject: "Support confirmation",
+      html: `<p>Thank you for you request! We will consider your comment ${comment}</p>`,
+    };
+    await sendEmail(confirmationEmail);
+
+    res.json({ message: "Support request sent successfully" });
+  } catch (error) {
+    console.error("Error sending support request:", error);
+    res.status(500).json({ message: "Error sending support request" });
+  }
 }
 module.exports = {
   register: wrapControllerFunction(register),
   login: wrapControllerFunction(login),
   getCurrent: wrapControllerFunction(getCurrent),
   logout: wrapControllerFunction(logout),
+  refresh: wrapControllerFunction(refresh),
   updateTheme: wrapControllerFunction(updateTheme),
   updateProfile: wrapControllerFunction(updateProfile),
-  getHelpEmail: wrapControllerFunction(getHelpEmail),
-  refresh: wrapControllerFunction(refresh),
+  sendHelpRequest: wrapControllerFunction(sendHelpRequest),
+
   generateToken,
 };

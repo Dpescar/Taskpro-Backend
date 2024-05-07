@@ -15,7 +15,7 @@ async function getById(req, res) {
   const dashboard = await Dashboard.findById(dashboardId);
   const columns = await Column.find({ owner: dashboard._id });
 
-  if(columns.length>0){
+  if (columns.length > 0) {
     const columnsWithOwnCards = await Column.aggregate([
       {
         $match: { $or: columns },
@@ -29,8 +29,8 @@ async function getById(req, res) {
         },
       },
     ]);
-    if (!dashboard ) throw HttpError(404);
-  
+    if (!dashboard) throw HttpError(404);
+
     res.json({
       dashboard,
       columns: columnsWithOwnCards,
@@ -40,7 +40,6 @@ async function getById(req, res) {
     dashboard,
     columns: [],
   });
- 
 }
 
 async function addNew(req, res) {
@@ -74,9 +73,13 @@ async function updateById(req, res) {
   res.json(result);
 }
 
-async function updateCurrentDashboard(req, res){
+async function updateCurrentDashboard(req, res) {
   const { dashboardId } = req.params;
-  const result = await Dashboard.findByIdAndUpdate(dashboardId, {...req.body}, {new:true})
+  const result = await Dashboard.findByIdAndUpdate(
+    dashboardId,
+    { ...req.body },
+    { new: true }
+  );
   if (!result) throw HttpError(404);
   res.json(result);
 }
@@ -87,5 +90,5 @@ module.exports = {
   addNew: controllerWrapper(addNew),
   removeById: controllerWrapper(removeById),
   updateById: controllerWrapper(updateById),
-  updateCurrentDashboard: controllerWrapper(updateCurrentDashboard)
+  updateCurrentDashboard: controllerWrapper(updateCurrentDashboard),
 };
