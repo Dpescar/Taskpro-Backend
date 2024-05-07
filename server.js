@@ -6,7 +6,7 @@ const { DB_URI } = process.env;
 mongoose
   .connect(DB_URI)
   .then(() => {
-    app.listen(8080, () => {
+    app.listen(3000, () => {
       console.log("Connected to MongoDB");
     });
   })

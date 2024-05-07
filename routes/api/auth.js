@@ -1,7 +1,6 @@
 const express = require("express");
 const {
   register,
-  register1,
   login,
   refresh,
   getCurrent,
@@ -19,16 +18,10 @@ const uploadCloud = require("../../middlewares/uploadMiddlewares");
 const router = express.Router();
 
 router.post("/register", validateBody(schemas.registerSchema), register);
-router.post("/register1", validateBody(schemas.registerSchema), register1);
-
 router.post("/login", validateBody(schemas.loginSchema), login);
-
 router.post("/refresh", validateBody(schemas.refreshSchema), refresh);
-
 router.get("/current", authenticate, getCurrent);
-
 router.post("/logout", authenticate, logout);
-
 router.patch(
   "/theme",
   authenticate,

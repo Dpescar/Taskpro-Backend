@@ -5,55 +5,36 @@ const HttpError = require("../helpers/HttpError");
 const sendEmail = require("../helpers/sendEmail");
 const wrapControllerFunction = require("../helpers/decorators");
 const crypto = require("crypto");
+const fs = require("fs");
+const jimp = require("jimp");
 
 const { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } = process.env;
 
 function generateToken() {
   return crypto.randomBytes(32).toString("hex");
 }
+
 async function register(req, res) {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    throw HttpError(409, "Email in use");
-  }
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const avatarURL = "";
-
-  const newUser = await User.create({
-    ...req.body,
-    password: hashedPassword,
-    avatarURL,
-  });
-
-  res.status(201).json({
-    email: newUser.email,
-  });
-}
-async function register1(req, res) {
   try {
     const { email, password } = req.body;
 
-    // Check if the email is already in use
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(409).json({ message: "Email is already in use" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+    const avatarURL = "";
 
-    // Create a new user with confirmation token
     const newUser = await User.create({
       ...req.body,
       password: hashedPassword,
       confirmationToken: generateToken(),
+      avatarURL,
     });
 
-    // Build the confirmation link
-    const confirmationLink = `http://localhost:8080/confirm?token=${newUser.confirmationToken}`;
+    const confirmationLink = `http://localhost:3000/confirm?token=${newUser.confirmationToken}`;
 
-    // Email data
     const emailData = {
       to: email,
       subject: "Registration Confirmation",
@@ -61,11 +42,9 @@ async function register1(req, res) {
       html: `<p>Welcome to our site! Please <a href="${confirmationLink}">confirm your registration</a>.</p>`,
     };
 
-    // Send the confirmation email
     await sendEmail(emailData);
     console.log("Confirmation email sent successfully.");
 
-    // Respond with success message
     res.status(201).json({
       email: newUser.email,
       message:
@@ -77,43 +56,51 @@ async function register1(req, res) {
   }
 }
 async function login(req, res) {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw HttpError(401, "Email or password is wrong");
-  }
-  const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) {
-    throw HttpError(401, "Email or password is wrong");
-  }
-  const payload = { id: user._id };
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).send("Email or password is wrong");
+    }
+    const payload = { id: user._id };
 
-  const accessToken = jwt.sign(payload, ACCESS_TOKEN_KEY, {
-    expiresIn: "10m",
-  });
-  const refreshToken = jwt.sign(payload, REFRESH_TOKEN_KEY, {
-    expiresIn: "7d",
-  });
-  await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
-  res.status(200).json({
-    accessToken,
-    refreshToken,
-    user: {
+    const accessToken = jwt.sign(payload, ACCESS_TOKEN_KEY, {
+      expiresIn: "10m",
+    });
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_KEY, {
+      expiresIn: "7d",
+    });
+
+    await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
+    const userData = {
       _id: user._id,
       name: user.name,
       email: user.email,
       theme: user.theme,
       avatarURL: user.avatarURL,
-    },
-  });
+    };
+
+    res.status(200).json({
+      accessToken,
+      refreshToken,
+      user: userData,
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Login error" });
+  }
 }
 async function refresh(req, res) {
   const { refreshToken: token } = req.body;
   try {
     const { id } = jwt.verify(token, REFRESH_TOKEN_KEY);
-    const isExist = await User.findOne({ refreshToken: token });
-    if (!isExist) {
-      throw HttpError(403, "Token invalid");
+    const user = await User.findOne({ refreshToken: token });
+    if (!user) {
+      return res.status(404).send("Token invalid");
     }
     const payload = {
       id,
@@ -125,35 +112,49 @@ async function refresh(req, res) {
       expiresIn: "7d",
     });
     await User.findByIdAndUpdate(id, { accessToken, refreshToken });
+
     res.json({
       accessToken,
       refreshToken,
     });
   } catch (error) {
-    throw HttpError(403, error.message);
+    console.error("Refresh error:", error);
+    res.status;
+  }
+}
+async function getCurrent(req, res) {
+  try {
+    const { _id, name, email, theme, avatarURL } = req.user;
+
+    if (!_id || !name || !email || !theme) {
+      return res.status(401).send("User data incomplete");
+    }
+
+    res.status(200).json({
+      user: {
+        _id,
+        name,
+        email,
+        theme,
+        avatarURL,
+      },
+    });
+  } catch (error) {
+    console.error("Extracting current user error:", error);
+    res.status(500).send("Extracting current user error");
   }
 }
 
-async function getCurrent(req, res) {
-  const { _id, name, email, theme, token, avatarURL } = req.user;
-  res.json({
-    token,
-    user: {
-      _id,
-      name,
-      email,
-      theme,
-      avatarURL,
-    },
-  });
-}
-
 async function logout(req, res) {
-  const { id } = req.user;
-  await User.findByIdAndUpdate(id, { accessToken: "", refreshToken: "" });
-  res.status(204).json();
+  try {
+    const { id } = req.user;
+    await User.findByIdAndUpdate(id, { accessToken: "", refreshToken: "" });
+    res.status(204).json({ message: "You have successfully logged out " });
+  } catch (error) {
+    console.error("Logout error:", error);
+    res.status(500).json({ message: "Logout error" });
+  }
 }
-
 async function updateTheme(req, res) {
   const { _id } = req.user;
   const result = await User.findByIdAndUpdate(_id, req.body, {
@@ -244,7 +245,6 @@ async function getHelpEmail(req, res) {
 }
 module.exports = {
   register: wrapControllerFunction(register),
-  register1: wrapControllerFunction(register1),
   login: wrapControllerFunction(login),
   getCurrent: wrapControllerFunction(getCurrent),
   logout: wrapControllerFunction(logout),
