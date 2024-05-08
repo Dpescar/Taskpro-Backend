@@ -8,38 +8,38 @@ const {
   updateTheme,
   updateProfile,
   sendHelpRequest,
-} = require("../../controllers/auth");
+} = require("../../controllers/userController");
 
 const validateBody = require("../../middlewares/validateBody");
 const authenticate = require("../../middlewares/authenticate");
-const schemas = require("../../models/validation-schemas/user-validation");
+const userValidation = require("../../models/validation/userValidation");
 const imageUpload = require("../../middlewares/uploadMiddleware");
 
 const router = express.Router();
 
-router.post("/register", validateBody(schemas.registerSchema), register);
-router.post("/login", validateBody(schemas.loginSchema), login);
-router.post("/refresh", validateBody(schemas.refreshSchema), refresh);
+router.post("/register", validateBody(userValidation.registerSchema), register);
+router.post("/login", validateBody(userValidation.loginSchema), login);
+router.post("/refresh", validateBody(userValidation.refreshSchema), refresh);
 router.get("/current", authenticate, getCurrent);
 router.post("/logout", authenticate, logout);
 router.patch(
   "/theme",
   authenticate,
-  validateBody(schemas.themeSchema),
+  validateBody(userValidation.themeSchema),
   updateTheme
 );
 router.put(
   "/profile",
   authenticate,
   imageUpload.single("avatarURL"),
-  validateBody(schemas.registerSchema),
+  validateBody(userValidation.registerSchema),
   updateProfile
 );
 
 router.post(
   "/help",
   authenticate,
-  validateBody(schemas.helpSchema),
+  validateBody(userValidation.helpSchema),
   sendHelpRequest
 );
 

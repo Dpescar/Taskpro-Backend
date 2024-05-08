@@ -6,9 +6,8 @@ const {
   addNew,
   removeById,
   setNewCardOwner,
-} = require("../../controllers/card");
+} = require("../../controllers/cardController");
 const authenticate = require("../../middlewares/authenticate");
-
 
 const router = express.Router();
 

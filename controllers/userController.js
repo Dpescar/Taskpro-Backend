@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/schemas/userSchema");
 const HttpError = require("../helpers/HttpError");
 const sendEmail = require("../helpers/sendEmail");
 const wrapControllerFunction = require("../helpers/decorators");

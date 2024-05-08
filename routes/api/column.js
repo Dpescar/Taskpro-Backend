@@ -1,11 +1,11 @@
 const express = require("express");
-const authenticate = require('../../middlewares/authenticate')
+const authenticate = require("../../middlewares/authenticate");
 const {
   getById,
   updateById,
   addNew,
   removeById,
-} = require("../../controllers/column");
+} = require("../../controllers/columnController");
 
 const router = express.Router();
 

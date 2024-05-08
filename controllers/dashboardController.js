@@ -1,8 +1,8 @@
 const HttpError = require("../helpers/HttpError");
 const controllerWrapper = require("../helpers/decorators");
-const Dashboard = require("../models/dashboard");
-const Column = require("../models/column");
-const Card = require("../models/card");
+const Dashboard = require("../models/schemas/dashboardSchema");
+const Column = require("../models/schemas/columnSchema");
+const Card = require("../models/schemas/cardSchema");
 
 async function getAll(req, res) {
   const { _id: owner } = req.user;

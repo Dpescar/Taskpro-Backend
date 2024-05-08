@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 
-const authenticate = require("../middlewares/authenticate");
+const authenticate = require("../../middlewares/authenticate");
 
-const MongooseError = require("../helpers/MongooseError");
+const MongooseError = require("../../helpers/MongooseError");
 
 const dashboardSchema = new Schema(
   {
@@ -18,10 +18,10 @@ const dashboardSchema = new Schema(
       type: String,
       default: "",
     },
-    currentDashboard:{
+    currentDashboard: {
       type: Boolean,
       default: false,
-      required:true,
+      required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,

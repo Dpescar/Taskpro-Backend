@@ -1,6 +1,6 @@
 const HttpError = require("../helpers/HttpError");
 const controllerWrapper = require("../helpers/decorators");
-const Card = require("../models/card");
+const Card = require("../models/schemas/cardSchema");
 
 async function getById(req, res) {
   const { cardId } = req.params;

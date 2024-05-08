@@ -28,9 +28,15 @@ const helpSchema = Joi.object({
 });
 const refreshSchema = Joi.object({
   refreshToken: Joi.string().required(),
-})
+});
 
+const userValidation = {
+  registerSchema,
+  loginSchema,
+  themeSchema,
+  userSchema,
+  helpSchema,
+  refreshSchema,
+};
 
-const schemas = { registerSchema, loginSchema, themeSchema, userSchema, helpSchema, refreshSchema };
-
-module.exports = schemas;
+module.exports = userValidation;

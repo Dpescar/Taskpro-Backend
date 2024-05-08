@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const MongooseError = require("../helpers/MongooseError");
+const MongooseError = require("../../helpers/MongooseError");
 
 const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const MIN_PASSWORD_LENGTH = 6;
