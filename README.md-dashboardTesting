@@ -1,0 +1,42 @@
+Testare in Postman:
+
+POST http://localhost:3000/api/dashboard/
+
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+body:
+{
+  "name": "New Dashboard Name",
+  "backgroundURL": "https://example.com/image.jpg",
+  "icon": "https://example.com/icon.jpg",
+  "currentDashboard": true
+}
+
+GET http://localhost:3000/api/dashboard/
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+
+GET http://localhost:3000/api/dashboard/
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+
+Delete: http://localhost:3000/api/dashboard/
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+
+
+PUT: http://localhost:3000/api/dashboard/663be12656f148cd18c4eb4a
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+body:
+{
+  "name": "New Dashboard Name2",
+  "backgroundURL": "https://example.com/image2.jpg"
+
+}
+
+Patch: http://localhost:3000/api/dashboard/663be12656f148cd18c4eb4a
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+body:
+{
+  "name": "New Dashboard Name2",
+  "backgroundURL": "https://example.com/image2.jpg"
+
+}

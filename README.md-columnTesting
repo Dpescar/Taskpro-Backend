@@ -1,0 +1,21 @@
+POST http://localhost:3000/api/column/663beb116b982d7e6c5345e9
+
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+
+body:
+{
+  "title": "Column1"
+}
+
+GET http://localhost:3000/api/column/663bf39525f2dc32edd2a378
+
+PUT http://localhost:3000/api/column/663bf39525f2dc32edd2a378
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+body: {"title": "Column3"}
+
+
+Delete: http://localhost:3000/api/column/663bf39525f2dc32edd2a378
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)

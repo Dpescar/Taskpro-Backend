@@ -1,4 +1,6 @@
 const express = require("express");
+const router = express.Router();
+const authenticate = require("../../middlewares/authenticate");
 const {
   getAll,
   getById,
@@ -7,20 +9,12 @@ const {
   removeById,
   updateCurrentDashboard,
 } = require("../../controllers/dashboardController");
-const authenticate = require("../../middlewares/authenticate");
-
-const router = express.Router();
-
-router.get("/", authenticate, getAll);
-
-router.get("/:dashboardId", authenticate, getById);
 
 router.post("/", authenticate, addNew);
-
+router.get("/", authenticate, getAll);
+router.get("/:dashboardId", authenticate, getById);
 router.put("/:dashboardId", authenticate, updateById);
-
 router.patch("/:dashboardId", authenticate, updateCurrentDashboard);
-
 router.delete("/:dashboardId", authenticate, removeById);
 
 module.exports = router;

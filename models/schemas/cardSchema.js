@@ -30,6 +30,6 @@ const cardSchema = new Schema(
 
 cardSchema.post("save", MongooseError);
 
-const Card = model("card", cardSchema);
+const Card = model("Card", cardSchema);
 
 module.exports = Card;

@@ -10,7 +10,7 @@ const columnSchema = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "dashboard",
+      ref: "Dashboard",
       required: true,
     },
   },
@@ -19,6 +19,6 @@ const columnSchema = new Schema(
 
 columnSchema.post("save", MongooseError);
 
-const Column = model("column", columnSchema);
+const Column = model("Column", columnSchema);
 
 module.exports = Column;

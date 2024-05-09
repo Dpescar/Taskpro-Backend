@@ -1,0 +1,23 @@
+POST http://localhost:3000/api/card/663bf39525f2dc32edd2a378
+
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+
+body: {
+  "title": "New Card Title",
+  "description": "Description of the new card"
+  }
+
+  GET: http://localhost:3000/api/card/663bf751aa47b973e1f1f18c
+  Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+
+PUT: http://localhost:3000/api/card/663bf751aa47b973e1f1f18c
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)
+body:
+{  "title": "New Card Title2"}
+
+Delete: http://localhost:3000/api/card/663bf751aa47b973e1f1f18c
+Authorization: bearer Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2FhYWQ5ZjdhNzlhNzFjZDk0MDc0NCIsImlhdCI6MTcxNTIwMDI0MSwiZXhwIjoxNzE1MjAwODQxfQ.HypH_nlOF3qYNJHIRjoL013DE60SO9JXlrADffN_9TA (este acces Token luat din login)
+la Params se adauga dashboardId: 663be12656f148cd18c4eb4a (se actualizeaza)

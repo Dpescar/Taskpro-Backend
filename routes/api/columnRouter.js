@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const authenticate = require("../../middlewares/authenticate");
 const {
   getById,
@@ -7,14 +8,9 @@ const {
   removeById,
 } = require("../../controllers/columnController");
 
-const router = express.Router();
-
-router.get("/:columnId", authenticate, getById);
-
 router.post("/:dashboardId", authenticate, addNew);
-
+router.get("/:columnId", authenticate, getById);
 router.put("/:columnId", authenticate, updateById);
-
 router.delete("/:columnId", authenticate, removeById);
 
 module.exports = router;

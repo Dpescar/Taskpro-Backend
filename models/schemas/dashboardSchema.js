@@ -1,7 +1,4 @@
 const { Schema, model } = require("mongoose");
-
-const authenticate = require("../../middlewares/authenticate");
-
 const MongooseError = require("../../helpers/MongooseError");
 
 const dashboardSchema = new Schema(
@@ -25,7 +22,7 @@ const dashboardSchema = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: true,
     },
   },
@@ -34,6 +31,6 @@ const dashboardSchema = new Schema(
 
 dashboardSchema.post("save", MongooseError);
 
-const Dashboard = model("dashboard", dashboardSchema);
+const Dashboard = model("Dashboard", dashboardSchema);
 
 module.exports = Dashboard;
