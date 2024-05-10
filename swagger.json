@@ -12,7 +12,7 @@
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "http://localhost:3007" },
+    { "url": "http://localhost:3000" },
     { "url": "https://taskproapi-ukbi.onrender.com" }
   ],
   "tags": [
@@ -444,7 +444,7 @@
           }
         }
       },
-      "patch":{
+      "patch": {
         "tags": ["Dashboard"],
         "summary": "Change current status of Dashboard",
         "parameters": [
@@ -485,8 +485,8 @@
             "description": "Not authorized",
             "content": {}
           },
-          "404":{
-            "description":"Not found"
+          "404": {
+            "description": "Not found"
           }
         }
       },
@@ -890,9 +890,20 @@
             "properties": {
               "_id": { "type": "string", "description": "DB user id" },
               "email": { "type": "string", "description": "email@email.com" },
-              "name": { "type": "string", "description": "name", "example": "user-name" },
-              "avatarURL": { "type": "string", "description": "avatar address on cloudinary" },
-              "theme": { "type": "string", "description": "theme", "example": "violet" }
+              "name": {
+                "type": "string",
+                "description": "name",
+                "example": "user-name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "avatar address on cloudinary"
+              },
+              "theme": {
+                "type": "string",
+                "description": "theme",
+                "example": "violet"
+              }
             }
           }
         }
@@ -926,9 +937,20 @@
             "properties": {
               "_id": { "type": "string", "description": "DB user id" },
               "email": { "type": "string", "description": "email@email.com" },
-              "name": { "type": "string", "description": "name", "example": "user-name" },
-              "avatarURL": { "type": "string", "description": "avatar address on cloudinary" },
-              "theme": { "type": "string", "description": "theme", "example": "violet" }
+              "name": {
+                "type": "string",
+                "description": "name",
+                "example": "user-name"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "avatar address on cloudinary"
+              },
+              "theme": {
+                "type": "string",
+                "description": "theme",
+                "example": "violet"
+              }
             }
           }
         }
@@ -949,7 +971,11 @@
             "description": "id from DB",
             "example": "viodghfj5435346yulet"
           },
-          "name": { "type": "string", "description": "name", "example": "user-name" },
+          "name": {
+            "type": "string",
+            "description": "name",
+            "example": "user-name"
+          },
           "email": { "type": "string", "description": "email@email.com" },
           "password": { "type": "string", "description": "hashed password" },
           "theme": { "type": "string", "description": "theme-color" },
@@ -988,7 +1014,11 @@
             "description": "id from DB",
             "example": "viodghfj5435346yuletsd"
           },
-          "name": { "type": "string", "description": "name", "example": "user-name" },
+          "name": {
+            "type": "string",
+            "description": "name",
+            "example": "user-name"
+          },
           "email": { "type": "string", "description": "email@email.com" },
           "password": { "type": "string", "description": "hashed password" },
           "theme": { "type": "string", "description": "theme-color" },
@@ -1010,14 +1040,15 @@
           }
         }
       },
-      "GetHelpResponse":{
+      "GetHelpResponse": {
         "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example":"Reply email sent"
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Reply email sent"
+          }
         }
-      }},
+      },
       "GetAllDashboardsRequest": {},
       "GetAllDashboardsResponse": {
         "type": "array",
@@ -1060,7 +1091,11 @@
           },
           "backgroundURL": { "type": "string", "description": "backgroundURL" },
           "owner": { "type": "string", "description": "owner" },
-          "name": { "type": "string", "description": "name", "example": "user-name" }
+          "name": {
+            "type": "string",
+            "description": "name",
+            "example": "user-name"
+          }
         }
       },
       "GetAllDashboardInfoRequest": {},
@@ -1075,7 +1110,10 @@
                 "description": "id from DB",
                 "example": "viodghfj5435346yuletsd"
               },
-              "backgroundURL": { "type": "string", "description": "backgroundURL" },
+              "backgroundURL": {
+                "type": "string",
+                "description": "backgroundURL"
+              },
               "currentDashboard": {
                 "type": "boolean",
                 "description": "status",
@@ -1086,7 +1124,11 @@
                 "description": "URL"
               },
               "owner": { "type": "string", "description": "owner" },
-              "name": { "type": "string", "description": "name", "example": "user-name" }
+              "name": {
+                "type": "string",
+                "description": "name",
+                "example": "user-name"
+              }
             }
           },
           "columns": {
@@ -1109,11 +1151,11 @@
                   "description": "dashboard is owner",
                   "example": "DB-dashboard-ID"
                 },
-                "cards":{
+                "cards": {
                   "type": "array",
-                  "items":{
+                  "items": {
                     "type": "object",
-                    "properties":{
+                    "properties": {
                       "_id": {
                         "type": "string",
                         "description": "id from DB",
@@ -1210,9 +1252,16 @@
                 "description": "status",
                 "example": "false"
               },
-              "backgroundURL": { "type": "string", "description": "backgroundURL" },
+              "backgroundURL": {
+                "type": "string",
+                "description": "backgroundURL"
+              },
               "owner": { "type": "string", "description": "owner" },
-              "name": { "type": "string", "description": "name", "example": "user-name" }
+              "name": {
+                "type": "string",
+                "description": "name",
+                "example": "user-name"
+              }
             }
           },
           "columns": {
@@ -1240,16 +1289,16 @@
           }
         }
       },
-      "ChangeCurrentStatusOfDashboardRequest":{
+      "ChangeCurrentStatusOfDashboardRequest": {
         "type": "object",
         "properties": {
           "currentDashboard": {
-            "type": "boolean" ,
+            "type": "boolean",
             "description": "new status of Dashboard"
           }
         }
       },
-      "ChangeCurrentStatusOfDashboardResponse":{
+      "ChangeCurrentStatusOfDashboardResponse": {
         "type": "object",
         "properties": {
           "_id": {
@@ -1281,7 +1330,11 @@
       "AddNewColumnToDashboardRequest": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "description": "title", "example": "title" }
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          }
         }
       },
       "AddNewColumnToDashboardResponse": {
@@ -1293,7 +1346,11 @@
             "example": "viodghfj5435346yuletsd"
           },
           "owner": { "type": "string", "description": "owner" },
-          "title": { "type": "string", "description": "title", "example": "title" }
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          }
         }
       },
       "GetAllCardsFromColumnResponse": {
@@ -1308,7 +1365,11 @@
                 "example": "viodghfj5435346yuletsd"
               },
               "owner": { "type": "string", "description": "owner id from DB" },
-              "title": { "type": "string", "description": "title", "example": "title" }
+              "title": {
+                "type": "string",
+                "description": "title",
+                "example": "title"
+              }
             }
           },
           "cards": {
@@ -1344,7 +1405,11 @@
       "ChangeColumnTitleRequest": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "description": "title", "example": "title" }
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          }
         }
       },
       "ChangeColumnTitleResponse": {
@@ -1376,19 +1441,31 @@
             "example": "viodghfj5435346yuletsd"
           },
           "owner": { "type": "string", "description": "owner" },
-          "title": { "type": "string", "description": "title", "example": "title" }
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          }
         }
       },
       "AddNewCardToColumnRequest": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "description": "title", "example": "title" },
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          },
           "description": {
             "type": "string",
             "description": "description",
             "example": "description"
           },
-          "deadline": { "type": "date", "description": "date", "example": "12-12-2023" }
+          "deadline": {
+            "type": "date",
+            "description": "date",
+            "example": "12-12-2023"
+          }
         }
       },
       "AddNewCardToColumnResponse": {
@@ -1462,7 +1539,11 @@
       "UpdateCardInformationRequest": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "description": "title", "example": "title" },
+          "title": {
+            "type": "string",
+            "description": "title",
+            "example": "title"
+          },
           "priority": {
             "type": "string",
             "enum": ["no-priority", "low", "medium", "high"],

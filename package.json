@@ -36,5 +36,9 @@
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "swagger-editor-dist": "^4.12.2",
+    "swagger-ui-dist": "^5.17.7"
   }
 }
